@@ -1,0 +1,47 @@
+name: 生成图片清单并部署到 GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 扫描 images 文件夹，生成图片清单 list.json
+        run: |
+          cd images
+          python3 -c "
+          import os, json
+          exts = ('.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg')
+          files = sorted([f for f in os.listdir('.') if f.lower().endswith(exts)])
+          with open('list.json', 'w', encoding='utf-8') as out:
+              json.dump(files, out, ensure_ascii=False, indent=2)
+          print(f'共找到 {len(files)} 张图片')
+          "
+          cd ..
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v4
+
+      - name: 打包上传产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

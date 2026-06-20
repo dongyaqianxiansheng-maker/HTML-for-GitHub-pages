@@ -22,11 +22,6 @@
     justify-content: space-between;
     padding: 0 24px;
     height: 56px;
-    position: relative;
-  }
-  .nav-left {
-    display: flex;
-    align-items: center;
   }
   .contact-btn {
     background: rgba(255,255,255,0.15);
@@ -41,13 +36,8 @@
     gap: 6px;
     transition: background 0.2s;
   }
-  .contact-btn:hover {
-    background: rgba(255,255,255,0.28);
-  }
-  .nav-right {
-    display: flex;
-    gap: 10px;
-  }
+  .contact-btn:hover { background: rgba(255,255,255,0.28); }
+  .nav-right { display: flex; gap: 10px; }
   .nav-btn {
     color: rgba(255,255,255,0.85);
     font-size: 14px;
@@ -63,9 +53,7 @@
     border-color: rgba(255,255,255,0.3);
     color: #fff;
   }
-  .nav-btn:hover {
-    border-color: rgba(255,255,255,0.3);
-  }
+  .nav-btn:hover { border-color: rgba(255,255,255,0.3); }
 
   /* ===== 中间主体区域 ===== */
   .hero {
@@ -83,12 +71,16 @@
     color: #1a1a2e;
     text-align: center;
   }
+  .hero-count {
+    font-size: 13px;
+    color: #666;
+  }
   .gallery {
     width: 100%;
-    max-width: 900px;
+    max-width: 1100px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
   }
   .gallery-item {
     background: #fff;
@@ -96,20 +88,21 @@
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     aspect-ratio: 4 / 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: zoom-in;
   }
   .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.2s;
   }
-  .empty-tip {
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .empty-tip, .loading-tip {
     width: 100%;
     max-width: 480px;
-    height: 200px;
+    min-height: 160px;
     background: #dde8f8;
     border-radius: 12px;
     border: 1.5px dashed #b0c4e8;
@@ -121,23 +114,26 @@
     color: #378ADD;
     font-size: 13px;
     text-align: center;
-    padding: 16px;
+    padding: 24px;
   }
 
-  /* ===== 底部 ===== */
-  .footer {
+  /* 分页加载更多按钮 */
+  .load-more {
+    margin-top: 8px;
     background: #1a1a2e;
-    padding: 18px 24px;
-    text-align: center;
-  }
-  .footer p {
-    color: rgba(255,255,255,0.7);
-    font-size: 13px;
-  }
-  .footer strong {
     color: #fff;
-    font-weight: 500;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
   }
+  .load-more:hover { background: #2a2a4a; }
+
+  /* ===== 底部 ===== */
+  .footer { background: #1a1a2e; padding: 18px 24px; text-align: center; }
+  .footer p { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .footer strong { color: #fff; font-weight: 500; }
 
   /* ===== 联系方式弹窗 ===== */
   .modal-overlay {
@@ -150,9 +146,7 @@
     z-index: 1000;
     padding: 20px;
   }
-  .modal-overlay.show {
-    display: flex;
-  }
+  .modal-overlay.show { display: flex; }
   .modal-box {
     background: #fff;
     border-radius: 14px;
@@ -163,56 +157,47 @@
     position: relative;
     animation: pop 0.18s ease-out;
   }
-  @keyframes pop {
-    from { transform: scale(0.92); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .modal-box h3 {
-    font-size: 17px;
-    color: #1a1a2e;
-    margin-bottom: 18px;
-    text-align: center;
-  }
+  @keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-box h3 { font-size: 17px; color: #1a1a2e; margin-bottom: 18px; text-align: center; }
   .modal-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    background: #f5f6fa;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; background: #f5f6fa; border-radius: 10px; margin-bottom: 10px;
   }
-  .modal-row .label {
-    font-size: 13px;
-    color: #666;
-  }
-  .modal-row .value {
-    font-size: 14px;
-    color: #1a1a2e;
-    font-weight: 600;
-  }
+  .modal-row .label { font-size: 13px; color: #666; }
+  .modal-row .value { font-size: 14px; color: #1a1a2e; font-weight: 600; }
   .modal-close {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #999;
-    cursor: pointer;
-    line-height: 1;
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: none; font-size: 20px; color: #999; cursor: pointer; line-height: 1;
   }
   .modal-close:hover { color: #333; }
+
+  /* ===== 大图预览 ===== */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    cursor: zoom-out;
+  }
+  .lightbox.show { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+  }
 </style>
 </head>
 <body>
 
   <!-- 顶部导航栏 -->
   <div class="nav">
-    <div class="nav-left">
-      <button class="contact-btn" onclick="openContactModal()">
-        📞 联系方式
-      </button>
+    <div>
+      <button class="contact-btn" onclick="openContactModal()">📞 联系方式</button>
     </div>
     <div class="nav-right">
       <a href="index.html" class="nav-btn active">主页</a>
@@ -223,15 +208,20 @@
   <!-- 中间主体：图片展示区 -->
   <div class="hero">
     <h1 class="hero-title">我的个人主页</h1>
+    <div class="hero-count" id="heroCount"></div>
 
-    <div class="gallery" id="gallery">
-      <!-- 图片会自动从 images 文件夹加载，见下方 JS -->
+    <div class="loading-tip" id="loadingTip">
+      <span>⏳ 正在加载图片清单...</span>
     </div>
 
     <div class="empty-tip" id="emptyTip" style="display:none;">
       <span>📷 暂未检测到图片</span>
-      <span>把图片放进 images 文件夹，并在下方 imageList 数组中添加文件名即可显示</span>
+      <span>把图片放进 images 文件夹并推送到 GitHub，系统会自动检测并显示</span>
     </div>
+
+    <div class="gallery" id="gallery"></div>
+
+    <button class="load-more" id="loadMoreBtn" style="display:none;" onclick="renderNextBatch()">加载更多</button>
   </div>
 
   <!-- 底部 -->
@@ -255,43 +245,74 @@
     </div>
   </div>
 
+  <!-- 大图预览 -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="预览">
+  </div>
+
   <script>
-    // ============================================
-    // 在这里填写 images 文件夹里的图片文件名
-    // 把图片放进 images 文件夹后，把文件名加到下面的数组里即可，例如：
-    // const imageList = ["photo1.jpg", "photo2.png", "banner.jpg"];
-    // ============================================
-    const imageList = [
-      // "example1.jpg",
-      // "example2.png",
-    ];
+    const BATCH_SIZE = 60; // 图片很多，分批渲染，避免一次性加载1000多张卡顿
+    let allImages = [];
+    let renderedCount = 0;
 
     const gallery = document.getElementById('gallery');
+    const loadingTip = document.getElementById('loadingTip');
     const emptyTip = document.getElementById('emptyTip');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const heroCount = document.getElementById('heroCount');
 
-    if (imageList.length === 0) {
-      emptyTip.style.display = 'flex';
-    } else {
-      imageList.forEach(filename => {
+    // 自动加载 images/list.json（由 GitHub Actions 自动生成，无需手动维护）
+    fetch('images/list.json?_=' + Date.now())
+      .then(res => {
+        if (!res.ok) throw new Error('list.json 未找到');
+        return res.json();
+      })
+      .then(files => {
+        loadingTip.style.display = 'none';
+        allImages = files;
+        if (allImages.length === 0) {
+          emptyTip.style.display = 'flex';
+          return;
+        }
+        heroCount.textContent = `共 ${allImages.length} 张图片`;
+        renderNextBatch();
+      })
+      .catch(() => {
+        loadingTip.style.display = 'none';
+        emptyTip.style.display = 'flex';
+        emptyTip.innerHTML = '<span>⚠️ 清单尚未生成</span><span>请先推送到 GitHub，让 Actions 自动生成 images/list.json</span>';
+      });
+
+    function renderNextBatch() {
+      const next = allImages.slice(renderedCount, renderedCount + BATCH_SIZE);
+      next.forEach(filename => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
         const img = document.createElement('img');
         img.src = 'images/' + filename;
         img.alt = filename;
+        img.loading = 'lazy';
+        img.onclick = () => openLightbox(img.src);
         item.appendChild(img);
         gallery.appendChild(item);
       });
+      renderedCount += next.length;
+
+      loadMoreBtn.style.display = renderedCount < allImages.length ? 'block' : 'none';
     }
 
-    // 联系方式弹窗逻辑
-    function openContactModal() {
-      document.getElementById('contactModal').classList.add('show');
+    // 联系方式弹窗
+    function openContactModal() { document.getElementById('contactModal').classList.add('show'); }
+    function closeContactModal() { document.getElementById('contactModal').classList.remove('show'); }
+    function closeOnOverlay(e) { if (e.target.id === 'contactModal') closeContactModal(); }
+
+    // 大图预览
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('show');
     }
-    function closeContactModal() {
-      document.getElementById('contactModal').classList.remove('show');
-    }
-    function closeOnOverlay(e) {
-      if (e.target.id === 'contactModal') closeContactModal();
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('show');
     }
   </script>
 
