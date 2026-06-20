@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>山洞中学 - 我的个人主页</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  /* ===== 顶部导航栏 ===== */
+  .nav {
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+    position: relative;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+  .contact-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+  }
+  .contact-btn:hover {
+    background: rgba(255,255,255,0.28);
+  }
+  .nav-right {
+    display: flex;
+    gap: 10px;
+  }
+  .nav-btn {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    background: none;
+  }
+  .nav-btn.active {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+  }
+  .nav-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  /* ===== 中间主体区域 ===== */
+  .hero {
+    flex: 1;
+    background: linear-gradient(135deg, #e8f0fe 0%, #f3e8ff 100%);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .hero-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1a1a2e;
+    text-align: center;
+  }
+  .gallery {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .gallery-item {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .empty-tip {
+    width: 100%;
+    max-width: 480px;
+    height: 200px;
+    background: #dde8f8;
+    border-radius: 12px;
+    border: 1.5px dashed #b0c4e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #378ADD;
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+  }
+
+  /* ===== 底部 ===== */
+  .footer {
+    background: #1a1a2e;
+    padding: 18px 24px;
+    text-align: center;
+  }
+  .footer p {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+  .footer strong {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  /* ===== 联系方式弹窗 ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal-overlay.show {
+    display: flex;
+  }
+  .modal-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 22px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    position: relative;
+    animation: pop 0.18s ease-out;
+  }
+  @keyframes pop {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .modal-box h3 {
+    font-size: 17px;
+    color: #1a1a2e;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #f5f6fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .modal-row .label {
+    font-size: 13px;
+    color: #666;
+  }
+  .modal-row .value {
+    font-size: 14px;
+    color: #1a1a2e;
+    font-weight: 600;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { color: #333; }
+</style>
+</head>
+<body>
+
+  <!-- 顶部导航栏 -->
+  <div class="nav">
+    <div class="nav-left">
+      <button class="contact-btn" onclick="openContactModal()">
+        📞 联系方式
+      </button>
+    </div>
+    <div class="nav-right">
+      <a href="index.html" class="nav-btn active">主页</a>
+      <a href="#" class="nav-btn" onclick="openContactModal(); return false;">联系</a>
+    </div>
+  </div>
+
+  <!-- 中间主体：图片展示区 -->
+  <div class="hero">
+    <h1 class="hero-title">我的个人主页</h1>
+
+    <div class="gallery" id="gallery">
+      <!-- 图片会自动从 images 文件夹加载，见下方 JS -->
+    </div>
+
+    <div class="empty-tip" id="emptyTip" style="display:none;">
+      <span>📷 暂未检测到图片</span>
+      <span>把图片放进 images 文件夹，并在下方 imageList 数组中添加文件名即可显示</span>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    <p>© 2025 <strong>山洞中学</strong> · All Rights Reserved</p>
+  </div>
+
+  <!-- 联系方式弹窗 -->
+  <div class="modal-overlay" id="contactModal" onclick="closeOnOverlay(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      <h3>联系方式</h3>
+      <div class="modal-row">
+        <span class="label">📱 电话</span>
+        <span class="value">16768413020</span>
+      </div>
+      <div class="modal-row">
+        <span class="label">💬 QQ</span>
+        <span class="value">1900940676</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // 在这里填写 images 文件夹里的图片文件名
+    // 把图片放进 images 文件夹后，把文件名加到下面的数组里即可，例如：
+    // const imageList = ["photo1.jpg", "photo2.png", "banner.jpg"];
+    // ============================================
+    const imageList = [
+      // "example1.jpg",
+      // "example2.png",
+    ];
+
+    const gallery = document.getElementById('gallery');
+    const emptyTip = document.getElementById('emptyTip');
+
+    if (imageList.length === 0) {
+      emptyTip.style.display = 'flex';
+    } else {
+      imageList.forEach(filename => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        const img = document.createElement('img');
+        img.src = 'images/' + filename;
+        img.alt = filename;
+        item.appendChild(img);
+        gallery.appendChild(item);
+      });
+    }
+
+    // 联系方式弹窗逻辑
+    function openContactModal() {
+      document.getElementById('contactModal').classList.add('show');
+    }
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('show');
+    }
+    function closeOnOverlay(e) {
+      if (e.target.id === 'contactModal') closeContactModal();
+    }
+  </script>
+
+</body>
+</html>
