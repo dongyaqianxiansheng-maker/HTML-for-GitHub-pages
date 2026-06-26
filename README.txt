@@ -1,19 +1,3 @@
-把你的图片文件（jpg / png / webp 等）放到这个文件夹里
+A mysterious project involving Unisoc chips. It does not rely on the existing https://github.com/TomKing062/unisoc_chipram_signcheck_exploit, CVE-2022-38691/38692, or CVE-2022-38694 to directly disable SPL loader signature verification on Unisoc devices. While it is possible to bypass BROM’s verification of the SPL using public CVEs, or dynamically patch U-Boot by embedding memory modification commands into U-Boot boot scripts (leveraging the lack of validation for U-Boot environment variables and design flaws in the BSP signature), the truth is that even without touching the SPL, the Unisoc chain of trust is fundamentally broken.
 
-然后打开 index.html，找到这一段代码：
-
-    const imageList = [
-      // "example1.jpg",
-      // "example2.png",
-    ];
-
-把图片文件名加进这个数组，例如：
-
-    const imageList = [
-      "photo1.jpg",
-      "photo2.png",
-      "banner.jpg",
-    ];
-
-保存后刷新网页，图片就会自动显示在主页中间的展示区里
-
+However, these methods face a hurdle: the BROM still performs verification before loading the SPL loader, which requires permanently disabling Secure Boot—a process that is extremely cumbersome and easily patched by manufacturers. This is where this mysterious ‘clever trick’ comes into play: it bypasses the SPL loader verification directly without exploiting any vulnerabilities. For the underlying principles, please refer to the relevant documents.
